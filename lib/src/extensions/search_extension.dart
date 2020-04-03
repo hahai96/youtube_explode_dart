@@ -19,8 +19,7 @@ extension SearchExtension on YoutubeExplode {
   Future<List<Video>> searchVideos(String query, [int page = 0]) async {
     var videos = <Video>[];
     var resultsJson = await _getSearchResults(query, page);
-
-    var countDelta = 0;
+    
     var videosJson = resultsJson['video'] as List<dynamic>;
     if (videosJson == null) {
       return videos;
@@ -54,11 +53,6 @@ extension SearchExtension on YoutubeExplode {
           duration,
           keyWords,
           statistics));
-
-      countDelta++;
-    }
-    if (countDelta <= 0) {
-      break;
     }
 
     return videos;
