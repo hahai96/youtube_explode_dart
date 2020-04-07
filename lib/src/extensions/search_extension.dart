@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import '../models/models.dart';
 import '../youtube_explode_base.dart';
-import 'helpers_extension.dart';
 
 /// Search extension for [YoutubeExplode]
 extension SearchExtension on YoutubeExplode {
@@ -28,31 +27,18 @@ extension SearchExtension on YoutubeExplode {
     videosJson.forEach((videoJson) {
       var id = videoJson['encrypted_id'];
       var author = videoJson['author'];
-      var uploadDate = DateTime.fromMillisecondsSinceEpoch(1581602398 * 1000);
       var title = videoJson['title'];
       var description = videoJson['description'];
       var duration = Duration(seconds: videoJson['length_seconds']);
-      var viewCount =
-      int.parse((videoJson['views'] as String).stripNonDigits);
-      var likeCount = videoJson['likes'];
-      var dislikeCount = videoJson['dislikes'];
-      var keyWords = RegExp(r'"[^\"]+"|\S+')
-          .allMatches(videoJson['keywords'])
-          .map((e) => e.group(0))
-          .toList();
 
-      var statistics = Statistics(viewCount, likeCount, dislikeCount);
       var thumbnails = ThumbnailSet(id);
       videos.add(Video(
-          id,
-          author,
-          uploadDate,
-          title,
-          description,
-          thumbnails,
-          duration,
-          keyWords,
-          statistics));
+          id: id,
+          author: author,
+          title: title,
+          description: description,
+          thumbnailSet: thumbnails,
+          duration: duration));
     });
 
     return videos;
