@@ -34,12 +34,15 @@ extension SearchExtension on YoutubeExplode {
 
       var thumbnails = ThumbnailSet(id);
       videos.add(Video(
-          id: id,
-          author: author,
-          title: title,
-          description: description,
-          thumbnailSet: thumbnails,
-          duration: duration));
+          id,
+          author,
+          null,
+          title,
+          description,
+          thumbnails,
+          duration,
+          null,
+          null));
     });
 
     print('v1 = ${DateTime.now()}');
