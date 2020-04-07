@@ -19,13 +19,13 @@ extension SearchExtension on YoutubeExplode {
   Future<List<Video>> searchVideos(String query, [int page = 0]) async {
     var videos = <Video>[];
     var resultsJson = await _getSearchResults(query, page);
-    
+
     var videosJson = resultsJson['video'] as List<dynamic>;
     if (videosJson == null) {
       return videos;
     }
 
-    for (var videoJson in videosJson) {
+    videosJson.forEach((videoJson) {
       var id = videoJson['encrypted_id'];
       var author = videoJson['author'];
       var uploadDate = DateTime.fromMillisecondsSinceEpoch(1581602398 * 1000);
@@ -53,7 +53,7 @@ extension SearchExtension on YoutubeExplode {
           duration,
           keyWords,
           statistics));
-    }
+    });
 
     return videos;
   }
