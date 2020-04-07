@@ -16,6 +16,7 @@ extension SearchExtension on YoutubeExplode {
 
   /// Searches videos using given query up to [maxPages] count.
   Future<List<Video>> searchVideos(String query, [int page = 0]) async {
+    print('v0 = ${DateTime.now()}');
     var videos = <Video>[];
     var resultsJson = await _getSearchResults(query, page);
 
@@ -40,6 +41,9 @@ extension SearchExtension on YoutubeExplode {
           thumbnailSet: thumbnails,
           duration: duration));
     });
+
+    print('v1 = ${DateTime.now()}');
+
 
     return videos;
   }
