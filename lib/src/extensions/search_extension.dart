@@ -6,10 +6,18 @@ import '../youtube_explode_base.dart';
 /// Search extension for [YoutubeExplode]
 extension SearchExtension on YoutubeExplode {
   Future<Map<String, dynamic>> _getSearchResults(String query, int page) async {
+    print('===> v1 encode ${DateTime.now()}');
+    final encodeUrl = Uri.encodeQueryComponent(query);
+    print('===> v2 encode ${DateTime.now()}');
+
     var url =
-        'https://youtube.com/search_ajax?style=json&search_query=${Uri
-        .encodeQueryComponent(query)}&page=$page&hl=en';
+        'https://youtube.com/search_ajax?style=json&search_query=$encodeUrl&page=$page&hl=en';
+
+
     var raw = (await client.get(url)).body;
+
+    print('===> v3 after http get  ${DateTime.now()}');
+
 
     return json.decode(raw);
   }
@@ -19,6 +27,9 @@ extension SearchExtension on YoutubeExplode {
     print('v0 = ${DateTime.now()}');
     var videos = <Video>[];
     var resultsJson = await _getSearchResults(query, page);
+
+    print('===> v4 ${DateTime.now()}');
+
 
     var videosJson = resultsJson['video'] as List<dynamic>;
     if (videosJson == null) {
@@ -45,7 +56,7 @@ extension SearchExtension on YoutubeExplode {
           null));
     });
 
-    print('v1 = ${DateTime.now()}');
+    print('===> v5 ${DateTime.now()}');
 
 
     return videos;
